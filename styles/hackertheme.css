@@ -1,0 +1,50 @@
+:root {
+  --neon-green: #00ff00;
+  --neon-blue: #00ffff;
+  --neon-pink: #ff00ff;
+  --dark-bg: #0a0a0a;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--neon-green);
+  font-family: 'Courier New', monospace;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+button {
+  background-color: var(--neon-green);
+  color: var(--dark-bg);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--neon-pink);
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.neon-text {
+  animation: neonPulse 2s infinite;
+}
+
+.backgroundImage {
+  background-image: url('/optimized-background.jpg');
+}

@@ -1,0 +1,88 @@
+.spotlightArea {
+  background-color: #1a1a1a;
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px #00ff00;
+  position: relative;
+  overflow: hidden;
+}
+
+.title {
+  color: #00ff00;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.spotlightPost {
+  background-color: rgba(10, 10, 10, 0.8);
+  padding: 15px;
+  border-left: 4px solid #00ff00;
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
+
+.spotlightPost::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from var(--angle),
+    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff
+  );
+  animation: rotate 10s linear infinite, colorChange 20s linear infinite;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.content {
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.postInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.author, .expiration {
+  color: #00ff00;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes colorChange {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(360deg); }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.backgroundImage {
+  background-image: url('/optimized-background.jpg');
+}

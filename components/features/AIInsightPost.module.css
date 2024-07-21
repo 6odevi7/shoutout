@@ -1,0 +1,45 @@
+.aiInsightArea {
+    background-color: #1e1e1e;
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px #00ffff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .title {
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .aiPost {
+    background-color: rgba(0, 255, 255, 0.1);
+    padding: 10px;
+    border-left: 4px solid #00ffff;
+    position: relative;
+    transition: transform 0.5s ease;
+  }
+  
+  .content {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  
+  .slideOut {
+    transform: translateX(-100%);
+  }
+  
+  .slideIn {
+    transform: translateX(0);
+  }
+  
+  .backgroundImage {
+    background-image: url('/optimized-background.jpg');
+  }
