@@ -1,7 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import React, { useState } from 'react'
-import '../styles/hackertheme.css';
 
 const AuthFormModal = ({ children, buttonText }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +10,7 @@ const AuthFormModal = ({ children, buttonText }) => {
 
   return (
     <>
-      <button className="sign-up-button" onClick={openModal}>{buttonText}</button>
+      <button className="auth-modal-button" onClick={openModal}>{buttonText}</button>
       {isOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -34,7 +33,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <AuthFormModal buttonText="Sign Up" buttonClass="sign-up-button">
+    <AuthFormModal buttonText="Sign Up">
       <form className="auth-form" onSubmit={handleRegister}>
         <input
           className="auth-input"
@@ -57,9 +56,8 @@ const RegisterForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className={buttonClass || "sign-up-button"} onClick={openModal}>{buttonText}</button>
-
-      </form>
+<button className="sign-up-button" type="submit">Sign Up</button>
+</form>
     </AuthFormModal>
   );
 };
@@ -74,7 +72,7 @@ const LoginForm = () => {
   };
 
   return (
-    <AuthFormModal buttonText="Login" buttonClass="login-button">
+    <AuthFormModal buttonText="Login">
       <form className="auth-form" onSubmit={handleLogin}>
         <input
           className="auth-input"
@@ -90,8 +88,8 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className={buttonClass || "sign-up-button"} onClick={openModal}>{buttonText}</button>
-        </form>
+      <button className="login-button" type="submit">Login</button>
+      </form>
     </AuthFormModal>
   );
 };

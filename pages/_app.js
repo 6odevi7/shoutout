@@ -1,4 +1,4 @@
-import '../styles/hackertheme.css'
+import '../styles/hackertheme.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
