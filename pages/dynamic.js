@@ -10,3 +10,7 @@ export async function getServerSideProps(context) {
     props: { dynamicData }
   }
 }
+
+export const config = {
+  runtime: 'edge',
+};

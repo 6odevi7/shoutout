@@ -41,3 +41,7 @@ function paginateFeedData(data, page = 1, limit = 10) {
     totalItems: data.length,
   };
 }
+
+export const config = {
+  runtime: 'edge',
+};
