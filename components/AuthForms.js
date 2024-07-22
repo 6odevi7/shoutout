@@ -1,68 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/hackertheme.css';
-import styled from 'styled-components';
-
-const ModalContent = styled.div`
-  background-color: rgba(15, 15, 15, 0.9);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  width: 15%;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .auth-input {
-    font-size: 14px;
-    padding: 5px;
-    width: 100%;
-    background-color: #1a1a1a;
-    color: #00ff00;
-    border: 1px solid #00ff00;
-  }
-
-  .auth-button {
-    font-size: 14px;
-    padding: 5px 10px;
-    width: 100%;
-    background-color: #00ff00;
-    color: #0f0f0f;
-    border: none;
-    cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    width: 30%;
-  }
-`;
-
-const SignUpButton = styled.button`
-  background-color: #00ff00;
-  color: #0f0f0f;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
 
 const AuthFormModal = ({ children, buttonText }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,13 +8,13 @@ const AuthFormModal = ({ children, buttonText }) => {
 
   return (
     <>
-      <SignUpButton onClick={openModal}>{buttonText}</SignUpButton>
+      <button className="sign-up-button" onClick={openModal}>{buttonText}</button>
       {isOpen && (
-        <ModalOverlay onClick={closeModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {children}
-          </ModalContent>
-        </ModalOverlay>
+          </div>
+        </div>
       )}
     </>
   );
@@ -155,3 +91,4 @@ export const LoginForm = () => {
     </AuthFormModal>
   );
 };
+
