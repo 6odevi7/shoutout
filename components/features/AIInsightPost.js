@@ -47,7 +47,7 @@ const AIInsightPost = React.memo(() => {
 
   return (
     <div className={styles.aiInsightArea}>
-      <p className={styles.title}>AI Insight</p>
+      <h3 className={styles.title}>AI Insight</h3>
       <div className={`${styles.aiPost} ${isTransitioning ? styles.slideOut : styles.slideIn}`}>
         <p className={styles.content}>{currentPost}</p>
       </div>
