@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheet } from 'styled-components'
 import React, { useState } from 'react'
 
 const AuthFormModal = ({ children, buttonText, buttonClass }) => {
