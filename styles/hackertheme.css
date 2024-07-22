@@ -1,20 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --neon-green: #00ff00;
-  --neon-blue: #00ffff;
-  --neon-pink: #ff00ff;
-  --dark-bg: #0a0a0a;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-  background-color: var(--dark-bg);
-  color: var(--neon-green);
-  font-family: 'Courier New', monospace;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.spotlight-area {
+  background-color: #1a1a1a;
+  border: 2px solid #00ff00;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.spotlight-area h2 {
+  color: #00ff00;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.spotlight-post {
+  background-color: #0a0a0a;
+  padding: 15px;
+  border-left: 4px solid #00ff00;
+}
+
+.spotlight-post p {
+  color: #00ff00;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.spotlight-post small {
+  color: #008800;
+  font-style: italic;
 }
 
 h1, h2, h3 {
@@ -29,11 +85,14 @@ button {
   padding: 10px 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 0 10px #8a2be2;
+  transition: box-shadow 0.3s ease;
 }
 
 button:hover {
   background-color: var(--neon-pink);
   box-shadow: 0 0 15px var(--neon-pink);
+  box-shadow: 0 0 20px #8a2be2;
 }
 
 @keyframes neonPulse {
@@ -85,6 +144,8 @@ button:hover {
   color: #0f0f0f;
   border: none;
   cursor: pointer;
+  box-shadow: 0 0 10px #8a2be2;
+  transition: box-shadow 0.3s ease;
 }
 
 @media (max-width: 600px) {
@@ -99,6 +160,8 @@ button:hover {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  box-shadow: 0 0 10px #8a2be2;
+  transition: box-shadow 0.3s ease;
 }
 
 .modal-overlay {
