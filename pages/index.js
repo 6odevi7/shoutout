@@ -3,7 +3,7 @@ import ShoutoutFeed from '../client/components/ShoutoutFeed';
 
 async function fetchStaticData() {
   try {
-    const response = await fetch('http://localhost:3000/api/feed');
+    const response = await fetch('/pages/api/feed');
     if (!response.ok) {
       throw new Error('Failed to fetch feed data');
     }
@@ -22,7 +22,7 @@ async function fetchStaticData() {
 const HomePage = ({ feedData }) => {
   return (
     <Home feedData={feedData}>
-      <ShoutoutFeed />
+      <ShoutoutFeed initialData={feedData} />
     </Home>
   );
 };

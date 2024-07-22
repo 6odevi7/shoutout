@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 import styles from './AIInsightPost.module.css';
 
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
   dangerouslyAllowBrowser: true
 });
 
