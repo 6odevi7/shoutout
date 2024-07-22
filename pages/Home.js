@@ -9,8 +9,6 @@ const ShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutF
 
 
 const Home = () => {
-  const [alerts] = useState([]);
-
   return (
     <div className="container">
       <header>
