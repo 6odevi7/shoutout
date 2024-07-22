@@ -4,7 +4,7 @@ import styles from './AIInsightPost.module.css';
 import Image from 'next/image'
 
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
   dangerouslyAllowBrowser: true
 });
 
@@ -47,7 +47,7 @@ const AIInsightPost = React.memo(() => {
 
   return (
     <div className={styles.aiInsightArea}>
-      <h3 className={styles.title}>AI Insight</h3>
+      <p className={styles.title}>AI Insight</p>
       <div className={`${styles.aiPost} ${isTransitioning ? styles.slideOut : styles.slideIn}`}>
         <p className={styles.content}>{currentPost}</p>
       </div>

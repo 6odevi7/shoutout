@@ -1,26 +1,21 @@
-const mongoose = require('mongoose');
+import dbConnect from '../../lib/mongodb';
+import SpotlightPost from '../../models/SpotlightPost'; // You'll need to create this model
 
-const spotlightPostSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  expiresAt: {
-    type: Date,
-    required: true
+export default async function handler(req, res) {
+  await dbConnect();
+
+  if (req.method === 'POST') {
+    try {
+      const spotlightPost = new SpotlightPost(req.body);
+      await spotlightPost.save();
+      res.status(201).json({ success: true, data: spotlightPost });
+    } catch (error) {
+      res.status(400).json({ success: false });
+    }
+  } else {
+    res.status(400).json({ success: false });
   }
-});
+}
 
-const SpotlightPost = mongoose.model('SpotlightPost', spotlightPostSchema);
 
 module.exports = SpotlightPost;

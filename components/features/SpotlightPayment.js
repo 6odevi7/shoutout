@@ -37,7 +37,7 @@ const SpotlightPayment = () => {
 
   return (
     <div className="spotlight-payment">
-      <h2>Submit Your Post to Spotlight</h2>
+      <a>Submit Your Post to Spotlight</a>
       {message && (
         <div className={`message ${isError ? 'error' : 'success'}`}>
           {message}

@@ -29,7 +29,7 @@ const SpotlightSubmissionForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="spotlight-submission-form">
-      <h3>Submit a Paid Spotlight Post</h3>
+      <h1>Submit a Paid Spotlight Post</h1>
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
