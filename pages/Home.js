@@ -1,14 +1,12 @@
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
+const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'), { ssr: false });
+const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'), { ssr: false });
+const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'), { ssr: false });
+const ShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'), { ssr: false });
 
-const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'));
-const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'));
-const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'));
-const ShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'));
-
-
-const Home = () => {
+const Home = ({ feedData }) => {
   return (
     <div className="container">
       <header>
@@ -16,8 +14,6 @@ const Home = () => {
         <p>&ldquo;A real-time user status feed commenting system.&ldquo; - Built by Twilight Pulse</p>
       </header>
       <main>
-      <Suspense fallback={<div>Loading Auth...</div>}>
-        </Suspense>
         <Suspense fallback={<div>Loading Spotlight...</div>}>
           <SpotlightArea />
         </Suspense>
@@ -28,7 +24,7 @@ const Home = () => {
           <AIInsightPost />
         </Suspense>
         <Suspense fallback={<div>Loading Feed...</div>}>
-          <ShoutoutFeed />
+          <ShoutoutFeed initialData={feedData} />
         </Suspense>
       </main>
     </div>

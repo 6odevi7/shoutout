@@ -19,10 +19,9 @@ async function fetchStaticData() {
   }
 }
 
-const HomePage = ({ staticData }) => {
+const HomePage = ({ feedData }) => {
   return (
-    <Home staticData={staticData}>
-      {/* Other components */}
+    <Home feedData={feedData}>
       <ShoutoutFeed />
     </Home>
   );
@@ -31,10 +30,10 @@ const HomePage = ({ staticData }) => {
 export default HomePage
 
 export async function getStaticProps() {
-  const staticData = await fetchStaticData()
+  const feedData = await fetchStaticData()
  
   return {
-    props: { staticData },
-    revalidate: 30 // Revalidate every 60 seconds
+    props: { feedData },
+    revalidate: 30
   }
 }
