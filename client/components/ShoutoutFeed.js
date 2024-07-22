@@ -1,30 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
 import io from 'socket.io-client';
 import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-const FeedContainer = styled.div`
-  background-color: #0f0f0f;
-  color: #00ff00;
-  font-family: 'Courier New', monospace;
-  padding: 20px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  background-color: #1a1a1a;
-  color: #00ff00;
-  border: 1px solid #00ff00;
-`;
-
-const ShoutoutPost = styled.div`
-  border: 1px solid #00ff00;
-  padding: 15px;
-  margin-bottom: 15px;
-`;
 
 const ShoutoutFeed = () => {
   const [shoutouts, setShoutouts] = useState([]);
