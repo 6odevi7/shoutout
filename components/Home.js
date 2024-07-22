@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="container">
       <header>
-        <h1>Shoutout!</h1>
+        <h>Shoutout!</h1>
         <p>&ldquo;A real-time user status feed commenting system.&rdquo; - Built by Twilight Pulse</p>
       </header>
       <main>
