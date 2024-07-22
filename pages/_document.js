@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import React, { useState } from 'react'
 
-const AuthFormModal = ({ children, buttonText }) => {
+const AuthFormModal = ({ children, buttonText, buttonClass }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -10,7 +10,7 @@ const AuthFormModal = ({ children, buttonText }) => {
 
   return (
     <>
-      <button className="auth-modal-button" onClick={openModal}>{buttonText}</button>
+      <button className={buttonClass} onClick={openModal}>{buttonText}</button>
       {isOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -33,7 +33,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <AuthFormModal buttonText="Sign Up">
+    <AuthFormModal buttonText="Sign Up" buttonClass="sign-up-button">
       <form className="auth-form" onSubmit={handleRegister}>
         <input
           className="auth-input"
@@ -56,8 +56,8 @@ const RegisterForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-<button className="sign-up-button" type="submit">Sign Up</button>
-</form>
+        <button className="sign-up-button" type="submit">Sign Up</button>
+      </form>
     </AuthFormModal>
   );
 };
@@ -72,7 +72,7 @@ const LoginForm = () => {
   };
 
   return (
-    <AuthFormModal buttonText="Login">
+    <AuthFormModal buttonText="Login" buttonClass="login-button">
       <form className="auth-form" onSubmit={handleLogin}>
         <input
           className="auth-input"
@@ -88,7 +88,7 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      <button className="login-button" type="submit">Login</button>
+        <button className="login-button" type="submit">Login</button>
       </form>
     </AuthFormModal>
   );
