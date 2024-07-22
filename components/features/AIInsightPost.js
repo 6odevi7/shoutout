@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import OpenAI from 'openai';
 import styles from './AIInsightPost.module.css';
-import Image from 'next/image'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true
 });
 
 const AIInsightPost = React.memo(() => {
-  const [currentPost, setCurrentPost] = useState('');
+  const [currentPost, setCurrentPost] = useState('Initializing AI Insight...');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const generateAIPost = async () => {
     try {
@@ -33,6 +33,7 @@ const AIInsightPost = React.memo(() => {
   };
 
   useEffect(() => {
+    setIsClient(true);
     const interval = setInterval(async () => {
       setIsTransitioning(true);
       setTimeout(async () => {
@@ -45,9 +46,11 @@ const AIInsightPost = React.memo(() => {
     return () => clearInterval(interval);
   }, []);
 
+  if (!isClient) return null;
+
   return (
     <div className={styles.aiInsightArea}>
-      <h3 className={styles.title}>AI Insight</h3>
+      <h2 className={styles.title}>AI Insight</h2>
       <div className={`${styles.aiPost} ${isTransitioning ? styles.slideOut : styles.slideIn}`}>
         <p className={styles.content}>{currentPost}</p>
       </div>
