@@ -1,5 +1,3 @@
-import StaticContent from '../components/StaticContent'
-
 export default function StaticPage({ staticData }) {
   return <StaticContent data={staticData} />
 }

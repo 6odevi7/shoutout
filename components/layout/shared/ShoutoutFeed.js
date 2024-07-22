@@ -1,50 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import Image from 'next/image'
 
-const ShoutoutFeed = React.memo(() => {
-  const [shoutouts, setShoutouts] = useState([]);
+const Feed = React.memo(() => {
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const socket = io();
-
-    // Fetch initial shoutouts
-    fetchShoutouts();
-
-    // Listen for new shoutouts
-    socket.on('newShoutout', (newShoutout) => {
-      setShoutouts((prevShoutouts) => [newShoutout, ...prevShoutouts]);
+    fetchPosts();
+    socket.on('newPost', (newPost) => {
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
     });
-
     return () => socket.disconnect();
   }, []);
 
-  const fetchShoutouts = async () => {
+  const fetchPosts = async () => {
     try {
       const response = await fetch('/api/shoutouts');
       const data = await response.json();
-      setShoutouts(data);
+      setPosts(data);
     } catch (error) {
-      console.error('Error fetching shoutouts:', error);
+      console.error('Error fetching posts:', error);
     }
   };
 
   return (
     <div>
-      {/* Render your shoutouts here */}
-      {shoutouts.map((shoutout) => (
-        <div key={shoutout.id}>
-          {/* Render individual shoutout */}
-          <p>{shoutout.content}</p>
+      {posts.map((post) => (
+        <div key={post.id}>
+          <p>{post.content}</p>
         </div>
       ))}
     </div>
   );
 });
 
-ShoutoutFeed.displayName = 'ShoutoutFeed';
+Feed.displayName = 'ShoutoutFeed';
 
-export default ShoutoutFeed;
-
+export default Feed;
 
 

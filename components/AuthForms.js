@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
 
+const AuthForm = ({ onLogin }) => {
+  const [isRegister, setIsRegister] = useState(false);
+
+  return (
+    <div className="auth-form-container">
+      <button onClick={() => setIsRegister(!isRegister)}>
+        {isRegister ? 'Switch to Login' : 'Switch to Register'}
+      </button>
+      {isRegister ? <RegisterForm /> : <LoginForm />}
+    </div>
+  );
+};
+
 const AuthFormModal = ({ children, buttonText }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +40,18 @@ export const RegisterForm = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Add registration logic here
+    try {
+      const response = await axios.post('/api/auth/register', {
+        username,
+        email,
+        password
+      });
+      console.log('Registration successful', response.data);
+      // Handle successful registration (e.g., show success message, auto-login)
+    } catch (error) {
+      console.error('Registration failed', error.response.data);
+      // Handle registration error (e.g., show error message)
+    }
   };
 
   return (
@@ -66,8 +90,19 @@ export const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Add login logic here
+    try {
+      const response = await axios.post('/api/auth/login', {
+        email,
+        password
+      });
+      console.log('Login successful', response.data);
+      // Handle successful login (e.g., store token, update app state)
+    } catch (error) {
+      console.error('Login failed', error.response.data);
+      // Handle login error (e.g., show error message)
+    }
   };
+
 
   return (
     <AuthFormModal buttonText="Login">
@@ -92,3 +127,4 @@ export const LoginForm = () => {
   );
 };
 
+export default AuthForm;

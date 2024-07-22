@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import OpenAI from 'openai';
-import styles from './AIInsightPost.module.css';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

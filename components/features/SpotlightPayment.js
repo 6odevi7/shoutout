@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
 const SpotlightPayment = () => {
   const [postContent, setPostContent] = useState('');
   const [paymentAmount, setPaymentAmount] = useState('');

@@ -1,5 +1,3 @@
-import DynamicContent from '../components/DynamicContent'
-
 export default function DynamicPage({ dynamicData }) {
   return <DynamicContent data={dynamicData} />
 }

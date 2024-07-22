@@ -1,6 +1,3 @@
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
-
 const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'), { ssr: false });
 const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'), { ssr: false });
 const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'), { ssr: false });

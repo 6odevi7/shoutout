@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 const SpotlightSubmissionForm = () => {
   const [content, setContent] = useState('');
   const [duration, setDuration] = useState(24); // Default duration in hours

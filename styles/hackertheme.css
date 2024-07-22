@@ -122,6 +122,14 @@ button:hover {
   z-index: 1000;
 }
 
+.auth-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;

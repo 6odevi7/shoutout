@@ -1,10 +1,9 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
 
-const SpotlightArea = dynamic(() => import('./features/SpotlightArea'));
-const ShoutoutForm = dynamic(() => import('./layout/shared/ShoutoutForm'));
+const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'));
+const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'));
 const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'));
-const ShoutoutFeed = dynamic(() => import('./layout/shared/ShoutoutFeed'));
+const ShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'));
 
 const Home = () => {
   return (

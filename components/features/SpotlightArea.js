@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './SpotlightArea.module.css';
-import Image from 'next/image'
 
 const SpotlightArea = React.memo(() => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);

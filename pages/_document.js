@@ -1,6 +1,5 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-import React from 'react'
-import { RegisterForm, LoginForm } from '../components/AuthForms'
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { RegisterForm, LoginForm } from '../components/AuthForms';
 
 class MyDocument extends Document {
   render() {
@@ -31,6 +30,6 @@ class MyDocument extends Document {
       </Html>
     )
   }
-}
+};
 
 export default MyDocument
