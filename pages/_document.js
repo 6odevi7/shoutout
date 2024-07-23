@@ -19,6 +19,7 @@ class MyDocument extends Document {
               })();
             `
           }} />
+          <script src="https://widget.sezzle.com/v1/javascript/price-widget?uuid=YOUR_MERCHANT_UUID"></script>
         </Head>
         <body>
           <Main />

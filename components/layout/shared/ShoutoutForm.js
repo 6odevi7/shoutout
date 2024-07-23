@@ -3,10 +3,12 @@ import styles from './ShoutoutForm.module.css';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import axios from 'axios';
+import { useSocket } from '/contexts/SocketContext';
 
 const ShoutoutForm = () => {
   const [content, setContent] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const socket = useSocket();
   const textareaRef = useRef(null);
   const maxLength = 280;
 
@@ -15,6 +17,7 @@ const ShoutoutForm = () => {
     try {
       const response = await axios.post('/api/shoutouts', { content });
       console.log('Shoutout posted:', response.data);
+      socket.emit('new_shoutout', response.data);
       setContent('');
     } catch (error) {
       console.error('Error posting shoutout:', error);

@@ -16,6 +16,30 @@ const handle = nextApp.getRequestHandler();
 const port = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'f9e0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6';
 
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.NEXT_PUBLIC_FRONTEND_URL,
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  
+  socket.on('new_shoutout', (data) => {
+    io.emit('shoutout_added', data);
+  });
+
+  socket.on('new_insight', (data) => {
+    io.emit('insight_added', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
 moment.tz.setDefault('UTC');
 
 const getCurrentUTCTime = () => moment().toISOString();
