@@ -10,8 +10,7 @@ export async function getServerSideProps({ req, res }) {
     try {
       // Your feed data fetching logic here
       const feedData = await fetchFeedData()
-      return { props: { feedData } }
-    } catch (error) {
+      return { props: { feedData } };
       res.status(200).json(paginatedData);
     } catch (error) {
       res.statusCode = 500;
@@ -22,9 +21,10 @@ export async function getServerSideProps({ req, res }) {
     res.statusCode = 405;
     res.json({ message: `Method ${req.method} Not Allowed` });
   }
+};
 
 async function fetchFeedData() {
   // Implement your data fetching logic here
   // This is just a placeholder
   return { posts: [] }
-}
+};
