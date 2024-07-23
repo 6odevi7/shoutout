@@ -109,19 +109,6 @@ button:hover {
   background-image: url('/optimized-background.jpg');
 }
 
-/* Add these styles to hackertheme.css */
-.modal-content {
-  background-color: rgba(15, 15, 15, 0.9);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  width: 15%;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
 .auth-container {
   position: fixed;
   top: 0;
@@ -183,4 +170,22 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: rgba(15, 15, 15, 0.9);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  width: 15%;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.emoji-picker {
+  position: absolute;
+  z-index: 1002;
 }

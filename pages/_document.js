@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { RegisterForm, LoginForm } from '../components/AuthForms';
 
 class MyDocument extends Document {
   render() {
@@ -23,13 +22,11 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <RegisterForm />
-          <LoginForm />
           <NextScript />
         </body>
       </Html>
     )
   }
-};
+}
 
-export default MyDocument
+export default MyDocument;

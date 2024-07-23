@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
 import styles from './ShoutoutForm.module.css';
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
+import axios from 'axios';
 
 const ShoutoutForm = () => {
   const [content, setContent] = useState('');
@@ -7,10 +10,15 @@ const ShoutoutForm = () => {
   const textareaRef = useRef(null);
   const maxLength = 280;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Shoutout submitted:', content);
-    setContent('');
+    try {
+      const response = await axios.post('/api/shoutouts', { content });
+      console.log('Shoutout posted:', response.data);
+      setContent('');
+    } catch (error) {
+      console.error('Error posting shoutout:', error);
+    }
   };
 
   const handleEmojiSelect = (emoji) => {
@@ -20,28 +28,20 @@ const ShoutoutForm = () => {
     setShowEmojiPicker(false);
   };
 
-  const highlightHashtags = (text) => {
-    return text.replace(/#\w+/g, match => `<span class="${styles.hashtag}">${match}</span>`);
-  };
+  const toggleEmojiPicker = () => setShowEmojiPicker(!showEmojiPicker);
 
   return (
     <form className={styles.shoutoutForm} onSubmit={handleSubmit}>
-      <div className={styles.inputWrapper}>
-        <textarea
-          ref={textareaRef}
-          className={styles.shoutoutInput}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="What's on your mind? Shout it out!"
-          maxLength={maxLength}
-        />
-        <div 
-          className={styles.formattedContent}
-          dangerouslySetInnerHTML={{ __html: highlightHashtags(content) }}
-        />
-      </div>
+      <textarea
+        ref={textareaRef}
+        className={styles.shoutoutInput}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="What's on your mind? Paste a YouTube URL to share a video!"
+        maxLength={maxLength}
+      />
       <div className={styles.formFooter}>
-        <button type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>😀</button>
+        <button type="button" onClick={toggleEmojiPicker}>😊</button>
         {showEmojiPicker && (
           <Picker data={data} onEmojiSelect={handleEmojiSelect} />
         )}

@@ -5,7 +5,7 @@ const SpotlightSubmissionForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/spotlight-posts', {
+      const response = await fetch('/pages/api/auth/spotlight-posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,12 +1,14 @@
-export default async function handler(req, res) {
-  // Simulate fetching posts from a database
-  const posts = [
-    { id: 1, content: 'First shoutout!', author: 'User1' },
-    { id: 2, content: 'Hello, Shoutout!', author: 'User2' },
-  ];
-  res.status(200).json(posts);
-}
+import React from 'react';
+import DOMPurify from 'dompurify';
 
-export const config = {
-  runtime: 'edge',
+const Post = ({ content, author, timestamp }) => {
+  return (
+    <div className="post">
+      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} />
+      <p>Posted by: {author}</p>
+      <p>Time: {new Date(timestamp).toLocaleString()}</p>
+    </div>
+  );
 };
+
+export default Post;

@@ -1,41 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
 import io from 'socket.io-client';
 
-const Feed = React.memo(() => {
-  const [posts, setPosts] = useState([]);
+const ShoutoutFeed = () => {
+  const [shoutouts, setShoutouts] = useState([]);
 
   useEffect(() => {
+    fetchShoutouts();
     const socket = io();
-    fetchPosts();
-    socket.on('newPost', (newPost) => {
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
+    socket.on('newShoutout', (newShoutout) => {
+      setShoutouts((prevShoutouts) => [newShoutout, ...prevShoutouts]);
     });
     return () => socket.disconnect();
   }, []);
 
-  const fetchPosts = async () => {
+  const fetchShoutouts = async () => {
     try {
       const response = await fetch('/api/shoutouts');
       const data = await response.json();
-      setPosts(data);
+      setShoutouts(data);
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error('Error fetching shoutouts:', error);
     }
+  };
+
+  const renderContent = (content) => {
+    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g;
+    const sanitizedContent = DOMPurify.sanitize(content);
+   
+    return sanitizedContent.replace(youtubeRegex, (match, videoId) => {
+      return `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    });
   };
 
   return (
     <div>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <p>{post.content}</p>
+      {shoutouts.map((shoutout) => (
+        <div key={shoutout._id}>
+          <div dangerouslySetInnerHTML={{ __html: renderContent(shoutout.content) }} />
         </div>
       ))}
     </div>
   );
-});
+};
 
-Feed.displayName = 'ShoutoutFeed';
-
-export default Feed;
-
-
+export default ShoutoutFeed;

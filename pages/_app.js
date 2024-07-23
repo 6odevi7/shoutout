@@ -1,33 +1,56 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
-import io from 'socket.io-client';
-import Document, { Html, Main, NextScript } from 'next/document';
-import Home from '../components/Home';
-import { RegisterForm, LoginForm } from '../components/AuthForms';
-import ShoutoutFeed from '../client/components/ShoutoutFeed';
-import StaticContent from '../components/StaticContent';
-import DynamicContent from '../components/DynamicContent';
-const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'));
-const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'));
-const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'));
-const DynamicShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'));
-import dynamic from 'next/dynamic';
-import { configureStore } from '@reduxjs/toolkit';
-import dbConnect from '../utils/dbConnect';
-import jwt from 'jsonwebtoken';
-import OpenAI from 'openai';
-import bcrypt from 'bcryptjs';
-import User from '../models/User';
-import Head from 'next/head';
-import Image from 'next/image';
+import React, { useEffect, useState, Suspense } from 'react';
+import { AuthProvider } from '../contexts/AuthContext';
 import '../styles/hackertheme.css';
-import { ServerStyleSheet, styled } from 'styled-components';
-import { spotlightArea, shoutoutForm, aiInsightPost } from '../styles';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import dynamic from 'next/dynamic';
+import moment from 'moment-timezone';
+
+const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'), { ssr: false });
+const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'), { ssr: false });
+const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'), { ssr: false });
+const DynamicShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'), { ssr: false });
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  const [isTimeSync, setIsTimeSync] = useState(false);
+
+  useEffect(() => {
+    const syncTime = async () => {
+      try {
+        const response = await fetch('/api/serverTime');
+        const { serverTime } = await response.json();
+        const timeDiff = new Date(serverTime).getTime() - Date.now();
+        localStorage.setItem('timeDiff', timeDiff);
+        setIsTimeSync(true);
+      } catch (error) {
+        console.error('Failed to sync time:', error);
+        setIsTimeSync(true); // Set to true even on error to allow app to proceed
+      }
+    };
+    syncTime();
+  }, []);
+
+  const getAdjustedTime = () => {
+    const timeDiff = parseInt(localStorage.getItem('timeDiff') || '0');
+    return new Date(Date.now() + timeDiff);
+  };
+
+  if (!isTimeSync) {
+    return <div>Synchronizing time...</div>;
+  }
+
+  return (
+    <AuthProvider>
+      <Suspense fallback={<div>Loading app...</div>}>
+        <Component 
+          {...pageProps} 
+          getAdjustedTime={getAdjustedTime}
+          SpotlightArea={SpotlightArea}
+          ShoutoutForm={ShoutoutForm}
+          AIInsightPost={AIInsightPost}
+          DynamicShoutoutFeed={DynamicShoutoutFeed}
+        />
+      </Suspense>
+    </AuthProvider>
+  );
 }
 
-export default MyApp
-
+export default MyApp;
