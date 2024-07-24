@@ -1,13 +1,7 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { AuthProvider } from '../contexts/AuthContext';
 import '../styles/hackertheme.css';
-import dynamic from 'next/dynamic';
 import moment from 'moment-timezone';
-
-const SpotlightArea = dynamic(() => import('../components/features/SpotlightArea'), { ssr: false });
-const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'), { ssr: false });
-const AIInsightPost = dynamic(() => import('../components/features/AIInsightPost'), { ssr: false });
-const DynamicShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'), { ssr: false });
 
 function MyApp({ Component, pageProps }) {
   const [isTimeSync, setIsTimeSync] = useState(false);
@@ -17,12 +11,12 @@ function MyApp({ Component, pageProps }) {
       try {
         const response = await fetch('/api/serverTime');
         const { serverTime } = await response.json();
-        const timeDiff = new Date(serverTime).getTime() - Date.now();
+        const timeDiff = Date.parse(serverTime) - Date.now();
         localStorage.setItem('timeDiff', timeDiff);
         setIsTimeSync(true);
       } catch (error) {
         console.error('Failed to sync time:', error);
-        setIsTimeSync(true); // Set to true even on error to allow app to proceed
+        setIsTimeSync(true);
       }
     };
     syncTime();
@@ -30,8 +24,13 @@ function MyApp({ Component, pageProps }) {
 
   const getAdjustedTime = () => {
     const timeDiff = parseInt(localStorage.getItem('timeDiff') || '0');
-    return new Date(Date.now() + timeDiff);
-  };
+    const currentTime = Date.now();
+    return Object.create(Date.prototype, {
+      [Symbol.toPrimitive]: {
+        value: () => currentTime + timeDiff
+      }
+    });
+  };  
 
   if (!isTimeSync) {
     return <div>Synchronizing time...</div>;
@@ -40,13 +39,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Suspense fallback={<div>Loading app...</div>}>
-        <Component 
-          {...pageProps} 
+        <Component
+          {...pageProps}
           getAdjustedTime={getAdjustedTime}
-          SpotlightArea={SpotlightArea}
-          ShoutoutForm={ShoutoutForm}
-          AIInsightPost={AIInsightPost}
-          DynamicShoutoutFeed={DynamicShoutoutFeed}
         />
       </Suspense>
     </AuthProvider>

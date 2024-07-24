@@ -1,15 +1,24 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import AuthForm from '../components/AuthForms';
+import { useState } from 'react';
+import AuthForm, { useAuth } from '../components/AuthForms';
 import Home from '../components/Home';
 import ShoutoutFeed from '../components/layout/shared/ShoutoutFeed';
 
 const HomePage = ({ feedData }) => {
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const { isAuthenticated, login } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [error, setError] = useState(null);
 
   const openAuthModal = () => setShowAuthModal(true);
   const closeAuthModal = () => setShowAuthModal(false);
+
+  const handleLogin = async (token, user) => {
+    try {
+      await login(token, user);
+      closeAuthModal();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <Home feedData={feedData}>
@@ -17,18 +26,11 @@ const HomePage = ({ feedData }) => {
         <>
           <button onClick={openAuthModal}>Sign In / Register</button>
           {showAuthModal && (
-            <div className="modal-overlay" onClick={closeAuthModal}>
-              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <AuthForm onLogin={(token) => {
-                  login(token);
-                  closeAuthModal();
-                }} />
-                <button onClick={closeAuthModal}>Close</button>
-              </div>
-            </div>
+            <AuthForm onLogin={handleLogin} onClose={closeAuthModal} />
           )}
         </>
       )}
+      {error && <div className="error-message">{error}</div>}
       <ShoutoutFeed initialData={feedData} />
     </Home>
   );

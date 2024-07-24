@@ -1,42 +1,41 @@
-import React, { createContext, useState, useEffect } from 'react';
 import jwt from 'jsonwebtoken';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // Check for existing token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        setIsAuthenticated(true);
-        setUser(decodedToken.user);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        setUser(decoded);
       } catch (error) {
+        console.error('Invalid token:', error);
         localStorage.removeItem('token');
       }
     }
   }, []);
 
-  const login = (token, userData) => {
+  const login = (token) => {
     localStorage.setItem('token', token);
-    setIsAuthenticated(true);
-    setUser(userData);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    setUser(decoded);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    setIsAuthenticated(false);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export default AuthContext;
+export const useAuth = () => useContext(AuthContext);

@@ -1,26 +1,30 @@
-import React, { useContext } from 'react';
-import dynamic from 'next/dynamic';
-import { AuthContext } from '../contexts/AuthContext';
-import SpotlightArea from '../components/features/SpotlightArea';
-import AIInsightPost from '../components/features/AIInsightPost';
-
-const ShoutoutForm = dynamic(() => import('../components/layout/shared/ShoutoutForm'), { ssr: false });
-const ShoutoutFeed = dynamic(() => import('../components/layout/shared/ShoutoutFeed'), { ssr: false });
-const AuthForm = dynamic(() => import('../components/AuthForms'), { ssr: false });
+import React, { useState, useContext } from 'react';
+import { AuthContext, AuthForm } from '../components/AuthForms';
+import SpotlightArea from '/components/features/SpotlightArea';
+import AIInsightPost from '/components/features/AIInsightPost';
+import ShoutoutForm from '/components/layout/shared/ShoutoutForm';
+import ShoutoutFeed from '/components/layout/shared/ShoutoutFeed';
 
 const Home = ({ feedData }) => {
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const isAuthenticated = authContext?.isAuthenticated;
+  const user = authContext?.user;
+  const [showAuthForm, setShowAuthForm] = useState(false);
 
   return (
     <div className="container">
+      <div>Initial render check</div>  
       <header>
         <h1>Shoutout!</h1>
-        <p>&ldquo;A real-time user status feed commenting system.&ldquo; - Built by Twilight Pulse</p>
-        {!isAuthenticated && <AuthForm onLogin={login} />}
+        <p>"A real-time user status feed commenting system." - Built by Twilight Pulse</p>
+        {!isAuthenticated && (
+          <button onClick={() => setShowAuthModal(true)}>Login / Register</button>
+        )}
       </header>
       <main>
+        {showAuthForm && !isAuthenticated && <AuthForm />}
         <SpotlightArea />
-        {isAuthenticated && <ShoutoutForm />}
+        {isAuthenticated && user && <ShoutoutForm />}
         <AIInsightPost />
         <ShoutoutFeed initialData={feedData} />
       </main>

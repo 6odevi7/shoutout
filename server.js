@@ -2,12 +2,14 @@ const express = require('express');
 const next = require('next');
 const mongoose = require('mongoose');
 const http = require('http');
-const socketIo = require('socket.io');
+const { socketIo, Server } = require('socket.io');
 const SpotlightPost = require('./models/SpotlightPost');
 const spotlightRoutes = require('./server/routes/spotlightRoutes');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const moment = require('moment-timezone');
 const jwt = require('jsonwebtoken');
+
+
 
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
@@ -16,6 +18,7 @@ const handle = nextApp.getRequestHandler();
 const port = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'f9e0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6';
 
+const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -61,7 +64,7 @@ const authenticateJWT = (req, res, next) => {
 nextApp.prepare().then(() => {
   const app = express();
   const server = http.createServer(app);
-  const io = socketIo(server);
+  const io = new Server(server);
 
   mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
